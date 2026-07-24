@@ -21,6 +21,13 @@ LANGUAGE_PAIRS = {
     "4": ("რუსული", "ქართული", "ru_ka.json"),
 }
 
+# ენის სახელობითი ფორმა -> ვითარებითი ბრუნვის ფორმა (input-ის ტექსტებში გამოსაყენებლად)
+ADVERBIAL_FORM = {
+    "ქართული": "ქართულად",
+    "ინგლისური": "ინგლისურად",
+    "რუსული": "რუსულად",
+}
+
 
 def dictionary_path(filename):
     # აწყობს კონკრეტული ლექსიკონის სრულ გზას (საქაღალდე + ფაილის სახელი)
@@ -79,7 +86,7 @@ def translate_word(src_lang, dst_lang, filename):
 
     # მთავარი ციკლი: ვთარგმნით სიტყვებს, სანამ მომხმარებელი არ დაწერს "გასვლა"
     while True:
-        word = input(f"\nშეიყვანეთ სიტყვა ან ფრაზა {src_lang}ზე (ან 'გასვლა' დასასრულებლად): ").strip()
+        word = input(f"\nშეიყვანეთ სიტყვა ან ფრაზა {ADVERBIAL_FORM[src_lang]} (ან 'გასვლა' დასასრულებლად): ").strip()
 
         # გამოსვლის პირობა - მომხმარებელს სურს ამ ენების წყვილიდან გასვლა
         if word.lower() in ("გასვლა", "exit", "quit"):
@@ -102,7 +109,7 @@ def translate_word(src_lang, dst_lang, filename):
             answer = input("გსურთ დაამატოთ თარგმანი ლექსიკონში? (დიახ/არა): ").strip().lower()
 
             if answer in ("დიახ", "yes", "y", "დ"):
-                new_translation = input(f"შეიყვანეთ თარგმანი {dst_lang}ზე: ").strip()
+                new_translation = input(f"შეიყვანეთ თარგმანი {ADVERBIAL_FORM[dst_lang]}: ").strip()
                 if new_translation:
                     translations[key] = new_translation      # ვამატებთ ახალ key-value წყვილს dict-ში (memory)
                     save_dictionary(filename, translations)   # და მაშინვე ვინახავთ JSON ფაილშიც, სამუდამოდ
